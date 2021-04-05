@@ -13,7 +13,7 @@ MIN_CONFIDENCE = 0.4
 SHOW_DETECTION = True
 
 
-# reduce BLOB_SIZE if GPU is not available
+# if GPU is not available, reduce BLOB_SIZE to 416 (only multiples of 32 allowed)
 BLOB_SIZE = 544
 DISPLAY_WIDTH = 800
 DISPLAY_HEIGHT = 600
