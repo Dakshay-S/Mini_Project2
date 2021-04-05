@@ -80,7 +80,7 @@ def print_time():
 if __name__ == '__main__':
     print_time()
 
-    image = cv2.imread('../yellow_truck.png')
+    image = cv2.imread('yellow_truck.png')
 
     # cv2.imshow('small cropped image', image)
 
