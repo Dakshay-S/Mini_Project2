@@ -8,7 +8,7 @@ import imagehash
 from PIL import Image
 import sqlite3
 
-VIDEO_PATH = '../test_videos/reverse_white_car.mp4'
+VIDEO_PATH = '../test_videos/white_car.mp4'
 DETECTOR_CLASS_FILE = '../cnn_labels/detector.names'
 READER_CLASS_FILE = '../cnn_labels/plate_reader.names'
 
@@ -36,7 +36,6 @@ DETECTOR_MAX_THREAD_Q_SZ = 10
 detector_frame_queue = Queue(DETECTOR_MAX_THREAD_Q_SZ)
 detector_blob_queue = Queue(DETECTOR_MAX_THREAD_Q_SZ)
 
-# READER_MAX_THREAD_Q_SZ =
 reader_frame_queue = Queue()
 reader_blob_queue = Queue()
 
@@ -238,16 +237,13 @@ def read_plate(net):
                 all_current_plates.remove(closest)
                 diff = closest[5] + closest[4][1] - pos[1]
                 all_current_plates.append((plate, time.time(), num, conf, pos, diff))
-                print(num, " diff = ", diff)
+                # print(num, " diff = ", diff)
 
-        # time.sleep(0.5)
 
 
 def get_num_with_conf(net, blob):
     net.setInput(blob)
     layerOutputs = net.forward(reader_out_layers_name)
-
-    # time.sleep(0.5)
 
     rects = []
     probabilities = []
@@ -280,7 +276,6 @@ def get_num_with_conf(net, blob):
     if len(indices) > 0:
         for i in indices.flatten():
             (x, y) = (rects[i][0], rects[i][1])
-            # (w, h) = (rects[i][2], rects[i][3])
 
             obj_type = READER_LABELS[classCodes[i]]
 
@@ -340,8 +335,6 @@ fps = FPS().start()
 all_processing_thread = Thread(target=all_processing, args=(num_plate_detector_DNN,), daemon=True)
 all_processing_thread.start()
 
-# reader_blob_thread = Thread(target=make_plate_blob, daemon=True)
-# reader_blob_thread.start()
 
 reader_thread = Thread(target=read_plate, args=(num_plate_reader_DNN,), daemon=True)
 reader_thread.start()
@@ -355,14 +348,6 @@ print("[INFO] approx. FPS: {:.2f}".format(fps.fps()))
 
 print("the end")
 print(len(num_plates))
-# cv2.destroyWindow("DETECTIONS")
-
-# for plate in num_plates:
-#
-#     cv2.imshow('plate', plate)
-#     key = cv2.waitKey(1000) & 0xFF
-#     if key == ord("n"):
-#         continue
 
 cv2.destroyAllWindows()
 
