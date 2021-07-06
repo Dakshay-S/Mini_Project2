@@ -60,7 +60,7 @@ num_plate_reader_DNN.setPreferableTarget(cv2.dnn.DNN_TARGET_CUDA)
 DATABASE_CONNECTION = None  # instantiated in reader thread
 DATABASE_CURSOR = None  # instantiated in reader thread
 command_create_table = "CREATE TABLE IF NOT EXISTS VEHICLE_INFO(" \
-                       "TIMESTAMP TEXT PRIMARY KEY, LICENSE_NUM TEXT, BEST_IMAGE BLOB,  DIRECTION TEXT CHECK (DIRECTION IN ('IN','OUT'))"
+                       "TIMESTAMP TEXT PRIMARY KEY, LICENSE_NUM TEXT, BEST_IMAGE BLOB,  DIRECTION TEXT"
 
 video_source = cv2.VideoCapture(VIDEO_PATH)
 # video_source = cv2.VideoCapture(0)
