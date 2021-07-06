@@ -60,7 +60,7 @@ num_plate_reader_DNN.setPreferableTarget(cv2.dnn.DNN_TARGET_CUDA)
 DATABASE_CONNECTION = None  # instantiated in reader thread
 DATABASE_CURSOR = None  # instantiated in reader thread
 command_create_table = "CREATE TABLE IF NOT EXISTS VEHICLE_INFO(" \
-                       "TIMESTAMP TEXT PRIMARY KEY, LICENSE_NUM TEXT, BEST_IMAGE BLOB,  DIRECTION TEXT"
+                       "TIMESTAMP TEXT PRIMARY KEY, LICENSE_NUM TEXT, BEST_IMAGE BLOB,  DIRECTION TEXT CHECK (DIRECTION IN ('IN','OUT')) )"
 
 video_source = cv2.VideoCapture(VIDEO_PATH)
 # video_source = cv2.VideoCapture(0)
@@ -320,7 +320,7 @@ def write_to_database(plate_info):
     command_insert_data = f"INSERT INTO VEHICLE_INFO VALUES (?,?,?,?)"
     # data_tuple = (f"'{timestamp}'", f"'{license_num}'", sqlite3.Binary(plate_img), f"'{direction}'")
 
-    data_tuple = (f"'{timestamp}'", f"'{license_num}'", sqlite3.Binary(plate_img), f"'{direction}'")
+    data_tuple = (f"'{timestamp}'", f"'{license_num}'", sqlite3.Binary(plate_img), direction)
 
     print(data_tuple)
 
